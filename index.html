@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Finance Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<div class="layout">
+
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-icon">F</div>
+      <span>Fin<em>Track</em></span>
+    </div>
+
+    <nav class="nav">
+      <div class="nav-group-label">Main</div>
+      <div class="nav-item active" data-page="dashboard">
+        <span class="n-ico">📊</span> Dashboard
+      </div>
+      <div class="nav-item" data-page="transactions">
+        <span class="n-ico">💳</span> Transactions
+        <span class="n-badge" id="txnBadge">0</span>
+      </div>
+      <div class="nav-item" data-page="insights">
+        <span class="n-ico">💡</span> Insights
+      </div>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="role-box">
+        <div class="role-box-label">Current Role</div>
+        <select class="role-selector" id="roleSelector">
+          <option value="admin">👑 Admin</option>
+          <option value="viewer">👁 Viewer</option>
+        </select>
+        <div class="role-indicator" id="roleIndicator">
+          <span class="role-dot admin"></span>
+          <span class="role-desc">Full access — can add &amp; edit</span>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <div class="sidebar-backdrop" id="sidebarBackdrop" style="display:none;" onclick="closeSidebar()"></div>
+
+  <div class="main">
+    <header class="topbar">
+      <div style="display:flex;align-items:center;gap:14px;">
+        <div class="hamburger" id="hamburger" onclick="toggleSidebar()">
+          <span></span><span></span><span></span>
+        </div>
+        <div class="topbar-left">
+          <div class="page-heading" id="pageHeading">Dashboard</div>
+          <div class="page-sub" id="pageSub">Your financial overview</div>
+        </div>
+      </div>
+      <div class="topbar-right">
+        <button class="btn btn-secondary btn-sm" onclick="exportData()">⬇ Export</button>
+        <div class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="Toggle theme">🌙</div>
+        <button class="btn btn-primary btn-sm admin-only" onclick="openModal()" id="addTxnBtn">+ Add Transaction</button>
+      </div>
+    </header>
+
+    <div class="content">
+
+      <!-- dashboard -->
+      <div class="page active" id="page-dashboard">
+        <div class="cards-row" id="cardsRow"></div>
+        <div class="charts-row">
+          <div class="chart-card">
+            <div class="chart-header">
+              <div class="chart-title">Balance Trend <span>last 6 months</span></div>
+            </div>
+            <div class="bar-chart-wrap">
+              <svg class="bar-chart-svg" id="barChartSvg" height="180"></svg>
+            </div>
+          </div>
+          <div class="chart-card">
+            <div class="chart-header">
+              <div class="chart-title">Spending <span>by category</span></div>
+            </div>
+            <div class="donut-wrap" id="donutWrap"></div>
+          </div>
+        </div>
+        <div class="section-title">Recent Transactions</div>
+        <div class="table-wrap">
+          <div class="table-scroll">
+            <table>
+              <thead>
+                <tr>
+                  <th>Description</th>
+                  <th>Date</th>
+                  <th>Category</th>
+                  <th>Type</th>
+                  <th style="text-align:right">Amount</th>
+                </tr>
+              </thead>
+              <tbody id="recentTbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- transactions -->
+      <div class="page" id="page-transactions">
+        <div class="viewer-msg" id="viewerMsg" style="display:none;">
+          👁 You are in <strong>Viewer mode</strong> — editing is disabled.
+        </div>
+        <div class="filter-bar">
+          <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Search transactions…" oninput="renderTransactions()"/>
+          </div>
+          <select class="filter-select" id="filterType" onchange="renderTransactions()">
+            <option value="all">All Types</option>
+            <option value="income">Income</option>
+            <option value="expense">Expense</option>
+          </select>
+          <select class="filter-select" id="filterCat" onchange="renderTransactions()">
+            <option value="all">All Categories</option>
+          </select>
+          <select class="filter-select" id="filterMonth" onchange="renderTransactions()">
+            <option value="all">All Months</option>
+          </select>
+          <span class="txn-count" id="txnCount"></span>
+        </div>
+        <div class="table-wrap">
+          <div class="table-scroll">
+            <table>
+              <thead>
+                <tr>
+                  <th onclick="sortBy('desc')">Description <span class="sort-arrow">↕</span></th>
+                  <th onclick="sortBy('date')">Date <span class="sort-arrow">↕</span></th>
+                  <th onclick="sortBy('category')">Category <span class="sort-arrow">↕</span></th>
+                  <th onclick="sortBy('type')">Type <span class="sort-arrow">↕</span></th>
+                  <th onclick="sortBy('amount')" style="text-align:right">Amount <span class="sort-arrow">↕</span></th>
+                  <th class="admin-only" id="actionsHeader">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="txnTbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- insights -->
+      <div class="page" id="page-insights">
+        <div class="insights-top" id="insightsTop"></div>
+        <div class="monthly-card">
+          <div class="monthly-title">📅 Monthly Comparison</div>
+          <div class="monthly-grid" id="monthlyGrid"></div>
+        </div>
+        <div class="obs-card">
+          <div class="obs-title">🔍 Key Observations</div>
+          <div id="obsList"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- modal -->
+<div class="overlay" id="modalOverlay">
+  <div class="modal">
+    <div class="modal-hdr">
+      <div class="modal-title" id="modalTitle">Add Transaction</div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="fg">
+      <label>Description</label>
+      <input type="text" id="fDesc" placeholder="e.g. Grocery shopping"/>
+    </div>
+    <div class="fg-row">
+      <div class="fg">
+        <label>Amount (₹)</label>
+        <input type="number" id="fAmount" placeholder="0.00" min="0" step="0.01"/>
+      </div>
+      <div class="fg">
+        <label>Date</label>
+        <input type="date" id="fDate"/>
+      </div>
+    </div>
+    <div class="fg-row">
+      <div class="fg">
+        <label>Type</label>
+        <select id="fType">
+          <option value="income">Income</option>
+          <option value="expense">Expense</option>
+        </select>
+      </div>
+      <div class="fg">
+        <label>Category</label>
+        <select id="fCat">
+          <option>Food</option>
+          <option>Transport</option>
+          <option>Shopping</option>
+          <option>Housing</option>
+          <option>Healthcare</option>
+          <option>Entertainment</option>
+          <option>Utilities</option>
+          <option>Salary</option>
+          <option>Freelance</option>
+          <option>Investment</option>
+          <option>Other</option>
+        </select>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="saveTransaction()" id="saveBtn">Save</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast">
+  <span class="t-icon" id="toastIcon">✅</span>
+  <span id="toastMsg">Saved!</span>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,554 @@
+FinTrack — Personal Finance Dashboard
+A modern, responsive personal finance dashboard built as part of a frontend developer internship assignment. This application helps users track their financial activity, visualize spending patterns, and manage transactions with role-based access control.
+
+📋 Overview
+FinTrack is a clean and interactive finance dashboard that allows users to:
+
+View overall financial summary (balance, income, expenses, savings rate)
+
+Explore and manage transactions with filtering, sorting, and search capabilities
+
+Understand spending patterns through visualizations and insights
+
+Experience role-based UI behavior (Admin/Viewer modes)
+
+✨ Features
+Core Features
+Feature	Description
+Dashboard Overview	Summary cards showing total balance, income, expenses, and savings rate
+Time-based Visualization	Bar chart showing income vs. expense trends over the last 6 months
+Categorical Visualization	Donut chart displaying spending breakdown by category
+Transactions Section	Complete transaction list with date, amount, category, and type
+Filtering & Sorting	Filter by type, category, month, and search by description
+Role-based UI	Admin can add/edit/delete transactions; Viewer can only view data
+Insights Section	Highest spending category, monthly comparisons, and financial observations
+Data Persistence	All transactions saved to localStorage for data persistence
+Optional Enhancements
+🌙 Dark/Light Mode toggle
+
+📤 CSV Export functionality
+
+💾 Local Storage persistence
+
+✨ Smooth animations and transitions
+
+📱 Fully responsive design
+
+🎯 Clean, modern UI with custom theming
+
+🛠️ Tech Stack
+HTML5 - Semantic structure
+
+CSS3 - Custom properties, flexbox, grid, responsive design
+
+JavaScript (ES6+) - Vanilla JS, no frameworks
+
+Fonts - Syne (headings) & Outfit (body) from Google Fonts
+
+Icons - Emoji-based icons for simplicity
+
+Storage - localStorage for data persistence
+
+📁 Project Structure
+text
+fintrack-dashboard/
+├── index.html          # Main HTML structure
+├── style.css           # All styles with CSS variables for theming
+├── script.js           # All JavaScript logic and state management
+└── README.md           # Project documentation
+🚀 Getting Started
+Prerequisites
+Any modern web browser (Chrome, Firefox, Safari, Edge)
+
+No build tools or dependencies required
+
+Installation
+Clone or download the files
+
+bash
+git clone <repository-url>
+# or download the ZIP file and extract
+Open the application
+
+Simply open index.html in your browser
+
+No server or build step required
+
+Start using the dashboard
+
+The dashboard loads with sample data automatically
+
+All data is saved to your browser's localStorage
+
+🎮 Usage Guide
+Dashboard Page
+View summary cards with key financial metrics
+
+Analyze balance trends in the bar chart (last 6 months)
+
+Explore spending distribution in the donut chart
+
+See recent transactions in the preview table
+
+Transactions Page
+View all transactions with details
+
+Search by description or category
+
+Filter by type (income/expense), category, or month
+
+Sort by description, date, category, type, or amount
+
+Admin actions (Add, Edit, Delete transactions)
+
+Insights Page
+Highest spending category with progress indicator
+
+Savings rate evaluation with recommendations
+
+Monthly comparison of income vs. expense
+
+Key observations and personalized financial tips
+
+Role Switching
+Use the dropdown in the sidebar to switch between Admin and Viewer roles
+
+Admin: Full access - can add, edit, and delete transactions
+
+Viewer: Read-only access - all editing controls are hidden
+
+Export Data
+Click the Export button in the top bar to download transactions as CSV
+
+Theme Toggle
+Click the sun/moon icon to switch between dark and light modes
+
+Theme preference is saved to localStorage
+
+📊 Mock Data
+The application includes 36 sample transactions spanning from November 2024 to March 2025, covering:
+
+Multiple income sources (Salary, Freelance, Investment returns)
+
+Various expense categories (Housing, Food, Transport, Shopping, Healthcare, Entertainment, Utilities)
+
+🎨 Design Approach
+Color Scheme
+Accent Green (#00e5a0) - Income, positive metrics
+
+Accent Blue (#4d8fff) - Information, neutral metrics
+
+Red (#ff5f5f) - Expenses, negative metrics
+
+Gold (#f5c542) - Warnings, savings indicators
+
+Purple (#a78bfa) - Special observations
+
+Typography
+Syne - Bold, geometric headings for impact
+
+Outfit - Clean, readable body text
+
+Responsive Design
+Desktop-first approach with mobile breakpoints
+
+Sidebar collapses to hamburger menu on tablets/mobile
+
+Cards and charts reflow gracefully on smaller screens
+
+Filter bar stacks vertically on mobile
+
+🧠 Technical Implementation
+State Management
+The application uses a simple but effective state object:
+
+javascript
+let state = {
+  transactions: [],  // All transaction records
+  role: 'admin',     // Current user role
+  theme: 'dark',     // Current theme preference
+  sort: { key: 'date', dir: 'desc' },  // Sorting state
+  editingId: null    // Currently editing transaction ID
+};
+Key Functions
+Function	Purpose
+loadState() / saveState()	Persist data to localStorage
+renderDashboard()	Update all dashboard components
+renderTransactions()	Display filtered/sorted transactions
+renderInsights()	Generate financial insights
+renderBarChart()	Draw SVG bar chart with dynamic data
+renderDonut()	Draw SVG donut chart for spending
+applyRole()	Update UI based on current role
+exportData()	Export transactions to CSV
+Data Flow
+User action → State update → Save to localStorage → Re-render affected components
+
+All rendering functions are pure and depend only on current state
+
+SVG charts are dynamically generated based on current transactions
+
+📱 Responsive Breakpoints
+Breakpoint	Behavior
+>1100px	4-column card grid
+960px - 1100px	2-column card grid
+768px - 960px	Charts stack vertically, sidebar collapses
+<768px	Mobile layout, hamburger menu, filters stack
+🧪 Edge Cases Handled
+✅ Empty state when no transactions match filters
+
+✅ Zero expenses gracefully handled in donut chart
+
+✅ Invalid form inputs prevented with validation
+
+✅ Confirmation dialog before deleting transactions
+
+✅ Viewer mode disables all edit actions
+
+✅ No data scenarios display friendly messages
+
+🔄 Data Persistence
+All transactions are saved to localStorage with the key fintrack_txns. Theme preference is saved as fintrack_theme. Data persists across browser sessions.
+
+🚦 Evaluation Criteria Alignment
+Criteria	Implementation
+Design & Creativity	Custom theming, modern UI, smooth animations, thoughtful color scheme
+Responsiveness	Mobile-first breakpoints, collapsible sidebar, adaptive layouts
+Functionality	Full CRUD for Admin, filtering, sorting, search, visualizations
+User Experience	Intuitive navigation, clear feedback (toasts), confirmation dialogs
+Technical Quality	Modular functions, pure render functions, no framework dependencies
+State Management	Centralized state object, localStorage sync, proper update flow
+Documentation	Comprehensive README with setup, features, and approach explanation
+Attention to Detail	Edge case handling, polish, validation, empty states
+💡 Future Improvements
+Add budget tracking with alerts
+
+Implement date range filters
+
+Add more chart types (line charts, pie charts)
+
+Support for multiple currencies
+
+Add recurring transaction support
+
+Implement data import functionality
+
+Add monthly budget targets
+
+Export to PDF reports
+
+Add authentication simulation
+
+📝 Notes
+This is a frontend-only application with no backend dependencies
+
+All data is stored locally in the browser
+
+The assignment focuses on frontend implementation, UI/UX, and state management
+
+The application demonstrates understanding of vanilla JavaScript, modern CSS, and responsive design
+
+👨‍💻 Author
+Frontend Developer Intern Assignment Submission
+
+FinTrack — Making personal finance tracking simple and intuitive.
+
+give me like copy
+FinTrack — Personal Finance Dashboard
+A modern, responsive personal finance dashboard built as part of a frontend developer internship assignment. This application helps users track their financial activity, visualize spending patterns, and manage transactions with role-based access control.
+
+📋 Overview
+FinTrack is a clean and interactive finance dashboard that allows users to:
+
+View overall financial summary (balance, income, expenses, savings rate)
+
+Explore and manage transactions with filtering, sorting, and search capabilities
+
+Understand spending patterns through visualizations and insights
+
+Experience role-based UI behavior (Admin/Viewer modes)
+
+✨ Features
+Core Features
+Feature	Description
+Dashboard Overview	Summary cards showing total balance, income, expenses, and savings rate
+Time-based Visualization	Bar chart showing income vs. expense trends over the last 6 months
+Categorical Visualization	Donut chart displaying spending breakdown by category
+Transactions Section	Complete transaction list with date, amount, category, and type
+Filtering & Sorting	Filter by type, category, month, and search by description
+Role-based UI	Admin can add/edit/delete transactions; Viewer can only view data
+Insights Section	Highest spending category, monthly comparisons, and financial observations
+Data Persistence	All transactions saved to localStorage for data persistence
+Optional Enhancements
+🌙 Dark/Light Mode toggle
+
+📤 CSV Export functionality
+
+💾 Local Storage persistence
+
+✨ Smooth animations and transitions
+
+📱 Fully responsive design
+
+🎯 Clean, modern UI with custom theming
+
+🛠️ Tech Stack
+HTML5 - Semantic structure
+
+CSS3 - Custom properties, flexbox, grid, responsive design
+
+JavaScript (ES6+) - Vanilla JS, no frameworks
+
+Fonts - Syne (headings) & Outfit (body) from Google Fonts
+
+Icons - Emoji-based icons for simplicity
+
+Storage - localStorage for data persistence
+
+📁 Project Structure
+text
+fintrack-dashboard/
+├── index.html          # Main HTML structure
+├── style.css           # All styles with CSS variables for theming
+├── script.js           # All JavaScript logic and state management
+└── README.md           # Project documentation
+🚀 Getting Started
+Prerequisites
+Any modern web browser (Chrome, Firefox, Safari, Edge)
+
+No build tools or dependencies required
+
+Installation
+Create the files
+
+Create three files in the same folder:
+
+index.html
+
+style.css
+
+script.js
+
+Copy the code
+
+Copy the HTML code into index.html, CSS code into style.css, and JavaScript code into script.js
+
+Open the application
+
+Simply open index.html in your browser
+
+No server or build step required
+
+Start using the dashboard
+
+The dashboard loads with sample data automatically
+
+All data is saved to your browser's localStorage
+
+🎮 Usage Guide
+Dashboard Page
+View summary cards with key financial metrics
+
+Analyze balance trends in the bar chart (last 6 months)
+
+Explore spending distribution in the donut chart
+
+See recent transactions in the preview table
+
+Transactions Page
+View all transactions with details
+
+Search by description or category
+
+Filter by type (income/expense), category, or month
+
+Sort by description, date, category, type, or amount
+
+Admin actions (Add, Edit, Delete transactions)
+
+Insights Page
+Highest spending category with progress indicator
+
+Savings rate evaluation with recommendations
+
+Monthly comparison of income vs. expense
+
+Key observations and personalized financial tips
+
+Role Switching
+Use the dropdown in the sidebar to switch between Admin and Viewer roles
+
+Admin: Full access - can add, edit, and delete transactions
+
+Viewer: Read-only access - all editing controls are hidden
+
+Export Data
+Click the Export button in the top bar to download transactions as CSV
+
+Theme Toggle
+Click the sun/moon icon to switch between dark and light modes
+
+Theme preference is saved to localStorage
+
+📊 Mock Data
+The application includes 36 sample transactions spanning from November 2024 to March 2025, covering:
+
+Multiple income sources (Salary, Freelance, Investment returns)
+
+Various expense categories (Housing, Food, Transport, Shopping, Healthcare, Entertainment, Utilities)
+
+🎨 Design Approach
+Color Scheme
+Color	Purpose
+Green (#00e5a0)	Income, positive metrics
+Blue (#4d8fff)	Information, neutral metrics
+Red (#ff5f5f)	Expenses, negative metrics
+Gold (#f5c542)	Warnings, savings indicators
+Purple (#a78bfa)	Special observations
+Typography
+Syne - Bold, geometric headings for impact
+
+Outfit - Clean, readable body text
+
+Responsive Design
+Desktop-first approach with mobile breakpoints
+
+Sidebar collapses to hamburger menu on tablets/mobile
+
+Cards and charts reflow gracefully on smaller screens
+
+Filter bar stacks vertically on mobile
+
+🧠 Technical Implementation
+State Management
+The application uses a simple but effective state object:
+
+javascript
+let state = {
+  transactions: [],  // All transaction records
+  role: 'admin',     // Current user role
+  theme: 'dark',     // Current theme preference
+  sort: { key: 'date', dir: 'desc' },  // Sorting state
+  editingId: null    // Currently editing transaction ID
+};
+Key Functions
+Function	Purpose
+loadState() / saveState()	Persist data to localStorage
+renderDashboard()	Update all dashboard components
+renderTransactions()	Display filtered/sorted transactions
+renderInsights()	Generate financial insights
+renderBarChart()	Draw SVG bar chart with dynamic data
+renderDonut()	Draw SVG donut chart for spending
+applyRole()	Update UI based on current role
+exportData()	Export transactions to CSV
+Data Flow
+User action → State update → Save to localStorage → Re-render affected components
+
+All rendering functions are pure and depend only on current state
+
+SVG charts are dynamically generated based on current transactions
+
+📱 Responsive Breakpoints
+Breakpoint	Behavior
+>1100px	4-column card grid
+960px - 1100px	2-column card grid
+768px - 960px	Charts stack vertically, sidebar collapses
+<768px	Mobile layout, hamburger menu, filters stack
+🧪 Edge Cases Handled
+✅ Empty state when no transactions match filters
+
+✅ Zero expenses gracefully handled in donut chart
+
+✅ Invalid form inputs prevented with validation
+
+✅ Confirmation dialog before deleting transactions
+
+✅ Viewer mode disables all edit actions
+
+✅ No data scenarios display friendly messages
+
+🔄 Data Persistence
+All transactions are saved to localStorage with the key fintrack_txns. Theme preference is saved as fintrack_theme. Data persists across browser sessions.
+
+🚦 Evaluation Criteria Alignment
+Criteria	Implementation
+Design & Creativity	Custom theming, modern UI, smooth animations, thoughtful color scheme
+Responsiveness	Mobile-first breakpoints, collapsible sidebar, adaptive layouts
+Functionality	Full CRUD for Admin, filtering, sorting, search, visualizations
+User Experience	Intuitive navigation, clear feedback (toasts), confirmation dialogs
+Technical Quality	Modular functions, pure render functions, no framework dependencies
+State Management	Centralized state object, localStorage sync, proper update flow
+Documentation	Comprehensive README with setup, features, and approach explanation
+Attention to Detail	Edge case handling, polish, validation, empty states
+💡 Future Improvements
+Add budget tracking with alerts
+
+Implement date range filters
+
+Add more chart types (line charts, pie charts)
+
+Support for multiple currencies
+
+Add recurring transaction support
+
+Implement data import functionality
+
+Add monthly budget targets
+
+Export to PDF reports
+
+Add authentication simulation
+
+📝 Notes
+This is a frontend-only application with no backend dependencies
+
+All data is stored locally in the browser
+
+The assignment focuses on frontend implementation, UI/UX, and state management
+
+The application demonstrates understanding of vanilla JavaScript, modern CSS, and responsive design
+
+📄 File Structure & Code
+File 1: index.html
+Contains the complete HTML structure including:
+
+Sidebar navigation with role selector
+
+Main content area with three pages (Dashboard, Transactions, Insights)
+
+Modal for adding/editing transactions
+
+Toast notification component
+
+All necessary DOM elements
+
+File 2: style.css
+Contains all styling including:
+
+CSS variables for dark/light themes
+
+Responsive layouts using flexbox and grid
+
+Component-specific styles
+
+Animation keyframes
+
+Mobile responsive media queries
+
+File 3: script.js
+Contains all JavaScript logic including:
+
+State management and localStorage persistence
+
+Dashboard rendering functions
+
+Transaction CRUD operations
+
+Filtering, sorting, and search functionality
+
+Chart generation (SVG bar chart and donut chart)
+
+Role-based UI handling
+
+Theme switching
+
+CSV export functionality
